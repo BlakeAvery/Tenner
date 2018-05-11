@@ -1,0 +1,57 @@
+Tenner Point-of-Sale System
+©UFO Products 2018
+UFO Products is a subsidiary of UFO Productions.
+
+PURPOSE OF THIS DOCUMENT
+This document outlines the design of the Tenner application. Specifically,
+it details how the application runs. It can be thought of as a type of
+documentation on the source code. For comprehensive documentation on
+the program, including source code and functions, please consult the
+docs folder in the program root.
+
+PROGRAM FLOW
+Tenner starts off with the Main class, which contains the main functions.
+The program may take parameters, which include:
+Location of the config file (-config)
+Region of register (usually defined in config file, format: -region US:FL)
+TODO: Figure out more params for program
+The program then, after loading in POS utils, boots into login mode.
+In login mode, the employee should enter their employee ID number
+(usually specified in employee.conf), and if the number is valid, the
+employee is logged into the register. From there, the register switches to
+order mode. If the employee types "logout" into the command window, the
+program should log them out and return to login mode.
+
+ORDER MODE
+There are two types of items: Food and drink. These are both defined as
+abstract classes in ufoproducts.food and ufoproducts.drink. Each food and
+drink item is defined as a subclass of their respective abstract class.
+Each item also has a specific ID. This is how items are added to orders.
+For each type of food item, there is an ArrayList that holds the items
+for a current order. When the order is totalled, the program uses POS utils
+to get the sales tax, and the final total is displayed. The program waits for
+cash input, and then after taking the cash input displays change and
+re-initializes the order lists and other variables.
+
+LOGIN MODE
+Login mode uses employee.conf to load in a list of employees that are allowed
+to be logged in. It provides a prompt, where you can type a small number of
+commands:
+login - opens login prompt
+info - prints version info
+exit - exits Tenner
+If the user enters "login", the program presents a login prompt to the user.
+The prompt should look like this: tenner>
+From there, the employee should enter their ID number. If the ID number is
+one that is found in employee.conf, the user is logged in.
+
+FINAL WORDS
+Remember, this is meant as a design document. Rudimentary documentation,
+basically. If you want more comprehensive documentation on Tenner, which
+includes functions and all that, check the docs directory in the program
+root directory. Remember, make sure to keep everything secure. Share the
+source code, by all means (as long as you comply with the license), but
+keep your config files secret, or whatever. This ensures that your store
+configuration, especially employee codes and all, will be kept secure.
+Thanks for using Tenner. You're all great.
+-Blake Avery, CEO of UFO
