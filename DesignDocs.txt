@@ -23,15 +23,12 @@ order mode. If the employee types "logout" into the command window, the
 program should log them out and return to login mode.
 
 ORDER MODE
-There are two types of items: Food and drink. These are both defined as
-abstract classes in ufoproducts.food and ufoproducts.drink. Each food and
-drink item is defined as a subclass of their respective abstract class.
-Each item also has a specific ID. This is how items are added to orders.
-For each type of food item, there is an ArrayList that holds the items
-for a current order. When the order is totalled, the program uses POS utils
-to get the sales tax, and the final total is displayed. The program waits for
-cash input, and then after taking the cash input displays change and
-re-initializes the order lists and other variables.
+In order mode, you are presented with a prompt. Type order to start a new
+order, or exit to log out. Enter the price of the item, and if the item is
+tax exempt, hit space and type a 0 there. When done, type anything that
+isn't a double. The order will be totalled, and present you with a prompt
+asking for cash. Enter the cash recieved, and the system will calculate
+change and return you to the beginning prompt.
 
 LOGIN MODE
 Login mode uses employee.conf to load in a list of employees that are allowed

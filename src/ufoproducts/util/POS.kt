@@ -1,6 +1,6 @@
 package ufoproducts.util
 
-import ufoproducts.drink.*; import ufoproducts.food.*
+import  ufoproducts.order.*
 
 class POS {
     /**
@@ -11,7 +11,7 @@ class POS {
      * ugly. On a side note, isn't it nice how Kotlin and Java can
      * work together?
      */
-    fun taxCalc(food: ArrayList<Food>, drink: ArrayList<Drink>): Double {
+    fun taxCalc(transaction: ArrayList<Item>): Double {
         /**
          * taxCalc: Returns the amout of sales tax applied to the order.
          * Totals up each list passed to it, based off the isTaxExempt flag.
@@ -19,40 +19,41 @@ class POS {
          * with the appropriate tax amount.
          */
         val TAX_RATE = 0.07 //Set to whatever your area's sales tax is
-        var ret = 0.0
-        //This first loop counts taxable items in the food list
-        var Foodcount = 0
-        for(x in 0 until food.size) {
-            if(!food[x].isTaxExempt) {
-                Foodcount++
-            }
-        }
-        //and this one totals our drinks
-        var Drinkcount = 0
-        for(x in 0 until drink.size) {
-            if(!drink[x].isTaxExempt) {
-                Drinkcount++
+        //This first loop counts taxable items
+        var count = 0.0
+        for(x in 0 until transaction.size) {
+            if(!transaction[x].isTaxExempt) {
+                count += transaction[x].price
             }
         }
         //Now, grab our full tax amount
-        val total = Drinkcount + Foodcount
-        ret = total * TAX_RATE
-        return ret
+        return count * TAX_RATE
     }
-    fun orderTotal(food: ArrayList<Food>, drink: ArrayList<Drink>): Double {
+    fun orderTotal(transaction: ArrayList<Item>): Double {
         /**
          * orderTotal: called to total the current order. Takes the current items in
          * the order, and returns the final total. Calls the taxCalc function to grab
          * sales tax for the order.
          */
         var ret = 0.0
-        for(x in 0 until food.size) {
-            ret += food[x].price
+        for(x in 0 until transaction.size) {
+            ret += transaction[x].price
         }
-        for(x in 0 until drink.size) {
-            ret += drink[x].price
-        }
-        ret += taxCalc(food, drink)
+        ret += taxCalc(transaction)
         return ret
+    }
+    fun orderSubTotal(transaction: ArrayList<Item>): Double {
+        /**
+         * orderSubTotal: Returns the subtotal of the order, without tax factored
+         * in.
+         */
+        var ret = 0.0
+        for(x in 0 until transaction.size) {
+            ret += transaction[x].price
+        }
+        return ret
+    }
+    fun changeCalc(total: Double, cash: Double): Double {
+        return cash - total
     }
 }
