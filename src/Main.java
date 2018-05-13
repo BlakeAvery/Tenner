@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Main {
     private static Scanner input = new Scanner(System.in);
-    private static final float VER = 0.5F;
+    private static final float VER = 0.6F;
     private static POS pos = new POS();
     private static ArrayList<Employee> employees = new ArrayList<Employee>();
     private static void loginPrompt() {
@@ -14,7 +14,7 @@ public class Main {
                 input.nextLine();
                 for(int x = 0; x < employees.size(); x++) {
                     if(employees.get(x).id == employee) {
-                        OrderScreen oS = new OrderScreen(employees.get(x), pos);
+                        OrderScreen oS = new OrderScreen(employees.get(x), pos, employees);
                         oS.start();
                     }
                 }
@@ -32,7 +32,8 @@ public class Main {
     }
     public static void main(String[] args) {
         System.out.println("Java utils init");
-        employees.add(new Employee("Admin", 0));
+        employees.add(new Employee("Admin", 0, true));
+        employees.add(new Employee("Jared Simmons", 1, false));
         System.out.println("Welcome to Tenner v" + VER);
         while(true) {
             System.out.print("tenner> ");
