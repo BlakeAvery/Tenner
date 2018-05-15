@@ -1,0 +1,12 @@
+body {
+    background-color: black;
+  }
+  p {
+    color: white;
+    font-family: "Segoe UI", "Open Sans", "Consolas", sans-serif;
+    font-size: 16pt;
+  }
+  h1 {
+    color: white;
+    font-family: "Segoe UI", "Open Sans", "Consolas", sans-serif;
+  }
