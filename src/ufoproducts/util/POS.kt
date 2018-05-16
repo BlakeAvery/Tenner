@@ -1,8 +1,9 @@
 package ufoproducts.util
 
 import  ufoproducts.order.*
+import java.io.File
 
-class POS {
+class POS constructor(val TAX_RATE: Double = 0.07) {
     /**
      * POS: Main class for POS utilities.
      * What would a POS utility be considered as? In this case,
@@ -18,7 +19,6 @@ class POS {
          * Then, based on those totals, applies tax and returns a double
          * with the appropriate tax amount.
          */
-        val TAX_RATE = 0.07 //Set to whatever your area's sales tax is
         //This first loop counts taxable items
         var count = 0.0
         for(x in 0 until transaction.size) {
@@ -55,5 +55,33 @@ class POS {
     }
     fun changeCalc(total: Double, cash: Double): Double {
         return cash - total
+    }
+    fun csvParse(fileLocation: String): ArrayList<Employee> {
+        /**
+         * csvParse: Takes a file in CSV format, and returns an ArrayList of Employees.
+         */
+        val employees = File(fileLocation)
+        val list = ArrayList<Employee>()
+        val eachLine = employees.readLines()
+        for(x in eachLine.indices) {
+            val line = eachLine[x].split(",")
+            //!!SCARY LINE OF CODE INCOMING!!
+            list.add(Employee(line[0], line[1].toInt(), line[2].toBoolean()))
+        }
+        return list
+    }
+    fun makeCSV(employees: ArrayList<Employee>, fileLocation: String) {
+        /**
+         * makeCSV: Takes the list of employees, and then writes the list to a file
+         * in CSV format.
+         */
+        val file = File(fileLocation)
+        /*!!SCARY INIT TEXT MEME INCOMING!!
+          also clobbers the file, because appending initially is boring
+         */
+        file.writeText("${employees[0].name},${employees[0].id},${employees[0].isManager}\n")
+        for(x in 1 until employees.size) {
+            file.appendText("${employees[x].name},${employees[x].id},${employees[x].isManager}\n")
+        }
     }
 }
