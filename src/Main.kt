@@ -9,6 +9,9 @@ object Main {
     private var pos = POS()
     private var employees = ArrayList<Employee>()
     private val tennerLog = File("logs${System.getProperty("file.separator")}log.txt")
+    init {
+        println("Starting Tenner $VER")
+    }
     private fun loginPrompt() {
         while(true) {
             print("login: ")
