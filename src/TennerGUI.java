@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.text.NumberFormat;
 import java.util.*;
 import javax.swing.*;
 import ufoproducts.util.*;
@@ -23,13 +24,17 @@ public class TennerGUI {
         JFrame.setDefaultLookAndFeelDecorated(true);
         //!!BAD MEME BAD MEME!!
         Container pane = hmm.getContentPane();
-        Label emptyLabel = new Label("Welcome to Tenner. The GUI build is nonfunctional! " +
-                "Isn't that fun?" + null);
+        Label emptyLabel = new Label("Welcome to Tenner v" + GUI_VER + ".");
         JButton clickMeDaddy = new JButton("Click me to break!");
+        JFormattedTextField typeShite = new JFormattedTextField("login:");
         pane.add(clickMeDaddy, BorderLayout.SOUTH);
-        pane.add(emptyLabel, BorderLayout.CENTER);
+        pane.add(emptyLabel, BorderLayout.NORTH);
+        pane.add(typeShite, BorderLayout.CENTER);
         hmm.pack();
         hmm.setVisible(true);
-        hmm.setSize((int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()), (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
+        hmm.setMenuBar(new MenuBar());
+        hmm.setSize((int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()), (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()) - 24);
+        //typeShite.setSize(240, 24); WHY DOESNT THIS WORK IM GONNA OFF MYSELF SDFIUDIJF
+
     }
 }
