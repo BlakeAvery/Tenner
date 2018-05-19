@@ -40,3 +40,11 @@ Total: 5.35
 Cash: 6.0
 Change: 0.65
 
+Purchase at Sat May 19 13:41:38 EDT 2018:
+1: [1.0 : NOTAX]
+Subtotal: 1.0
+Sales tax: 0.0
+Total: 1.0
+Cash: 1.0
+Change: 0.0
+

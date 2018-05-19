@@ -20,7 +20,7 @@ public class TennerGUI {
     public static POS pos = new POS();
     static JFrame hmm = new JFrame("Tenner Point-of-sale v" + GUI_VER);
     public static void main(String[] args) {
-        hmm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        hmm.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         JFrame.setDefaultLookAndFeelDecorated(true);
         //!!BAD MEME BAD MEME!!
         Container pane = hmm.getContentPane();
@@ -30,11 +30,13 @@ public class TennerGUI {
         pane.add(clickMeDaddy, BorderLayout.SOUTH);
         pane.add(emptyLabel, BorderLayout.NORTH);
         pane.add(typeShite, BorderLayout.CENTER);
-        hmm.pack();
-        hmm.setVisible(true);
+        MenuBar menuBar = new MenuBar();
+        menuBar.add(new Menu("File"));
+        menuBar.getMenu(0).add(new MenuItem("Exit"));
         hmm.setMenuBar(new MenuBar());
         hmm.setSize((int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()), (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()) - 24);
-        //typeShite.setSize(240, 24); WHY DOESNT THIS WORK IM GONNA OFF MYSELF SDFIUDIJF
-
+        typeShite.setSize(240, 24);
+        hmm.pack();
+        hmm.setVisible(true);
     }
 }

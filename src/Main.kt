@@ -9,6 +9,7 @@ object Main {
     private var pos = POS()
     private var employees = ArrayList<Employee>()
     private val tennerLog = File("logs${System.getProperty("file.separator")}log.txt")
+    private val SysProp = SystemConstants()
     init {
         println("Starting Tenner $VER")
     }
@@ -65,6 +66,7 @@ object Main {
         employees = pos.csvParse(filename)
         tennerLog.appendText("Started Tenner v$VER at ${Date()}.\n")
         tennerLog.appendText("Using employee list at $filename.\n")
+        tennerLog.appendText("Running on ${SysProp.OS} ${SysProp.VER} ${SysProp.ARCH}.\n")
         println("Welcome to Tenner v$VER")
         while(true) {
             try {
