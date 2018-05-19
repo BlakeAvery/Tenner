@@ -1,4 +1,4 @@
-#Tenner
+# Tenner
 
 A cheap, cheap , C H E A P point-of-sale solution.
 
@@ -8,7 +8,7 @@ Completely open source, because why not?
 Command-line mode is fully functional, documentation is ongoing.
 GUI mode is currently being developed, which may take a while.
 
-#TODO
+# TODO
 
 Finish GUI properly (Projected to be completed by 1.0)
 
