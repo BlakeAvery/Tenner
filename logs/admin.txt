@@ -1,0 +1,4 @@
+Employee Modder started at Sun May 20 20:17:38 EDT 2018
+Using file employees.dat.
+Wrote new employees.dat at Sun May 20 20:17:48 EDT 2018. Exiting.
+
