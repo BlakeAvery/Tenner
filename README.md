@@ -15,3 +15,5 @@ Finish GUI properly (Projected to be completed by 1.0)
 Add a client-server model (hence the java.net imports in source)
 
 Finish docs (oh boy may take longer than GUI dudes)
+
+Add order modification features

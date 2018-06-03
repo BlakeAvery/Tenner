@@ -4,7 +4,9 @@ import ufoproducts.order.*
 import java.util.*; import java.io.*; import java.net.*;
 
 class OrderScreen constructor(private var logged: Employee, private val pos: POS, private val list: ArrayList<Employee>, private val posLog: File) {
-    private val transactionLog = File("logs${System.getProperty("file.separator")}transactions.txt")
+    private val SysProp = SystemConstants()
+    private val transactionLog = File("logs${SysProp.SLASH}transactions.txt")
+    private val orderList = ArrayList<Order>()
     fun start() {
         println("Tenner: Order mode")
         println("Employee logged: $logged")
@@ -19,6 +21,7 @@ class OrderScreen constructor(private var logged: Employee, private val pos: POS
                     return
                 }
                 "chuser" -> changeUser()
+                "refund" -> refund()
                 else -> println("Invalid command.")
             }
         }
@@ -32,6 +35,37 @@ class OrderScreen constructor(private var logged: Employee, private val pos: POS
                 println("Employee logged: $logged")
                 posLog.appendText("Logged employee changed to $logged at ${Date()}.\n")
                 break
+            }
+        }
+    }
+    private fun refund() {
+        println("Select order to refund:")
+        for(x in orderList.indices) {
+            println(orderList[x])
+        }
+        print("choice> ")
+        val choice = readLine()?.toInt() ?: throw OutOfMemoryError("Excuse me")
+        for(x in orderList[choice].itemList.indices) {
+            println(orderList[choice].itemList[x])
+        }
+        print("Refund this order? ")
+        val y = readLine()?.get(0) ?: 'y'
+        when(y) {
+            'y' -> {
+                val refund = pos.orderTotal(orderList[choice].itemList)
+                transactionLog.appendText("Refund at ${Date()}:\n")
+                posLog.appendText("[Refund at ${Date()}]\n")
+                for(x in orderList[choice].itemList.indices) {
+                    transactionLog.appendText("${orderList[choice].itemList[x]}\n")
+                    posLog.appendText("${orderList[choice].itemList[x]}\n")
+                }
+                println("Refund total: $refund")
+                transactionLog.appendText("End refund at ${Date()}.\n\n")
+                posLog.appendText("[End refund at ${Date()}]\n\n")
+                orderList.removeAt(choice)
+            }
+            else -> {
+
             }
         }
     }
@@ -95,5 +129,6 @@ class OrderScreen constructor(private var logged: Employee, private val pos: POS
         println("Change: $change")
         transactionLog.appendText("Cash: $cash\nChange: $change\n\n")
         posLog.appendText("Cash: $cash\nChange: $change\n[End transaction at ${Date()}]\n")
+        orderList.add(Order(order, Date()))
     }
 }

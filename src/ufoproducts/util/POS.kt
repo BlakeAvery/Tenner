@@ -3,7 +3,7 @@ package ufoproducts.util
 import  ufoproducts.order.*
 import java.io.File
 
-class POS constructor(val TAX_RATE: Double = 0.07) {
+class POS constructor(val TAX_RATE: Double = 0.07) { //default tax rate is actually default tax rate of Palm Beach County, FL
     /**
      * POS: Main class for POS utilities.
      * What would a POS utility be considered as? In this case,
