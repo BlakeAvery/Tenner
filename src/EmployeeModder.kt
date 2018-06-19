@@ -31,7 +31,7 @@ object EmployeeModder {
                         }
                         'a' -> {
                             print("Enter new name: ")
-                            var string = readLine() ?: "Null"
+                            var string = readLine() ?: throw IllegalArgumentException()
                             print("Enter employee ID: ")
                             var id = readLine()?.toInt() ?: throw IllegalArgumentException()
                             print("Is this employee a manager? ")

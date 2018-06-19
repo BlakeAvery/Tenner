@@ -41,7 +41,7 @@ class OrderScreen constructor(private var logged: Employee, private val pos: POS
     private fun refund() {
         println("Select order to refund:")
         for(x in orderList.indices) {
-            println(orderList[x])
+            println("$x: ${orderList[x]}")
         }
         print("choice> ")
         val choice = readLine()?.toInt() ?: throw OutOfMemoryError("Excuse me")
@@ -60,12 +60,14 @@ class OrderScreen constructor(private var logged: Employee, private val pos: POS
                     posLog.appendText("${orderList[choice].itemList[x]}\n")
                 }
                 println("Refund total: $refund")
+                transactionLog.appendText("Refund: $refund\n")
+                posLog.appendText("Refund: $refund\n")
                 transactionLog.appendText("End refund at ${Date()}.\n\n")
-                posLog.appendText("[End refund at ${Date()}]\n\n")
+                posLog.appendText("[End refund at ${Date()}]\n")
                 orderList.removeAt(choice)
             }
             else -> {
-
+                println("Refund cancelled.")
             }
         }
     }
@@ -105,6 +107,7 @@ class OrderScreen constructor(private var logged: Employee, private val pos: POS
             transactionLog.appendText(logcat)
             posLog.appendText(logcat)
         }
+        //TODO: FIX FLOATING POINT ERRORS HERE(example: with tax rate of 0.7, 6.49 should be 6.95 not 6.94)
         val subTotal = String.format("%.2f", pos.orderSubTotal(order)).toDouble()
         val tax = String.format("%.2f", pos.taxCalc(order)).toDouble()
         val total = String.format("%.2f", pos.orderTotal(order)).toDouble()
