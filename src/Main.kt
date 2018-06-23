@@ -1,3 +1,4 @@
+import ufoproducts.config.*
 import ufoproducts.util.*
 
 import java.io.*
@@ -60,49 +61,49 @@ object Main {
                 server.soTimeout = 20000
                 val hi = DataOutputStream(server.getOutputStream())
                 val bye = DataInputStream(server.getInputStream())
-                hi.writeUTF("TEST $id Tenner$VER\n")
-                val ret = bye.readUTF() //wait for server ret code
+                hi.writeUTF("REGISTER $id Tenner$VER\n")
+                val ret = bye.readUTF()
                 println(ret)
                 val retcode = ret.substring(0, 3)
                 if(retcode.toInt() == 200) {
                     println("Looks like it works. We just need one last thing! Sales tax rate for your state.")
                     break
+                } else {
+
                 }
             } else {
                 println("Looks like you've entered an invalid address. Try again.")
             }
         }
-        val salesTax =
+        val salesTax = readLine()?.toDouble() ?: 0.07
+        println("Writing config settings to file...")
+        pos.configWrite(id, ip, port, salesTax)
+        println("Tenner is now ready to use.")
     }
     @JvmStatic
     fun main(args: Array<String>) {
-        pos = if(args.isEmpty()) {
-            POS()
-        } else if(args.size == 1) {
-            try {
-                POS(args[0].toDouble())
-            } catch(e: NumberFormatException) {
-                POS()
-            }
-        } else {
-            try {
-                POS(args[1].toDouble())
-            } catch(e: NumberFormatException) {
-                POS(args[0].toDouble())
-            }
-        }
-        val config = File("config.txt")
-        if(!config.exists()) {
+        val filename = "employees.dat"
+        val c = File("config.txt")
+        val config: Config
+        if(!c.exists()) {
             setupWizard()
-        }
-        val filename = try {
-            if(args.isEmpty() || args[0].toDouble() == pos.TAX_RATE) {
-                "employees.dat"
-            } else {
-                args[0]
+        } else {
+            config = pos.configRead()
+            pos = POS(config.tax)
+            server = Socket(config.ip, config.port)
+            server.soTimeout = 20000
+            val hi = DataOutputStream(server.getOutputStream())
+            val bye = DataInputStream(server.getInputStream())
+            hi.writeUTF("BOOT ${config.id} Tenner v$VER")
+            val h = bye.readUTF()
+            if(!(h.substring(0, 3).toInt() >= 200)) {
+                println("This install isn't registered with the server. Run the setup wizard? [y, n] ")
+                if(readLine()?.get(0) == 'y') {
+                    setupWizard()
+                } else {
+                    System.exit(1)
+                }
             }
-        } catch(e: NumberFormatException) {
-            args[0]
         }
         employees = pos.csvParse(filename)
         tennerLog.appendText("Started Tenner v$VER at ${Date()}.\n")
@@ -125,6 +126,7 @@ object Main {
                         val man = readLine()?.toInt() ?: 0
                         for (x in employees.indices) {
                             if (employees[x].id == man && employees[x].isManager) {
+
                                 val logback = File("logs${SysProp.SLASH}log.backup")
                                 tennerLog.renameTo(logback)
                                 tennerLog.appendText("Log deleted by ${employees[x].name} on ${Date()}\n")
