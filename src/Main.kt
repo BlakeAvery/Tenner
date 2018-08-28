@@ -69,7 +69,7 @@ object Main {
                     println("Looks like it works. We just need one last thing! Sales tax rate for your state.")
                     break
                 } else {
-
+                    println("Error: ")
                 }
             } else {
                 println("Looks like you've entered an invalid address. Try again.")
@@ -95,13 +95,10 @@ object Main {
             val hi = DataOutputStream(server.getOutputStream())
             val bye = DataInputStream(server.getInputStream())
             hi.writeUTF("BOOT ${config.id} Tenner v$VER")
-            val h = bye.readUTF()
-            if(!(h.substring(0, 3).toInt() >= 200)) {
-                println("This install isn't registered with the server. Run the setup wizard? [y, n] ")
-                if(readLine()?.get(0) == 'y') {
-                    setupWizard()
-                } else {
-                    System.exit(1)
+            val h = bye.readUTF().substring(0, 3).toInt()
+            when(h) {
+                in 200..299 -> {
+                    
                 }
             }
         }
