@@ -1,5 +1,7 @@
 # Tenner
 
+THIS PROGRAM IS OBSOLETE AND ISN'T BEING WORKED ON! DON'T USE IT UNLESS YOU'RE BRAINDEAD OR SOMETHING!
+
 A cheap, cheap , C H E A P point-of-sale solution.
 
 Written in mostly Kotlin, and not very expandable at all.
